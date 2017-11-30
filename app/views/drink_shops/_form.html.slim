@@ -1,0 +1,10 @@
+= simple_form_for(@drink_shop) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :phone, input_html: { type: 'text' }
+    = f.input :address
+
+  .form-actions
+    = f.button :submit

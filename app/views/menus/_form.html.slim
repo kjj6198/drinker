@@ -1,0 +1,13 @@
+.row.justify-content-md-center
+  .col.col-md-6
+    = simple_form_for(@menu) do |f|
+      = f.error_notification
+
+      .form-inputs
+        = f.input :name
+        = f.input :end_time
+        = f.input :drink_shop_id, collection: DrinkShop.all
+
+
+      .form-actions
+        = f.button :submit

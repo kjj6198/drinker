@@ -1,0 +1,19 @@
+h1 Listing drink_shops
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @drink_shops.each do |drink_shop|
+      tr
+        td = link_to 'Show', drink_shop
+        td = link_to 'Edit', edit_drink_shop_path(drink_shop)
+        td = link_to 'Destroy', drink_shop, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Drink shop', new_drink_shop_path

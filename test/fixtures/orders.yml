@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  has_paid: false
+  note: MyText
+
+two:
+  name: MyString
+  has_paid: false
+  note: MyText

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drinker17</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= filestack_js_include_tag %>
+    <%= filestack_js_init_tag %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <span class="navbar-brand">17 Drinker</span>
+      <ul class="nav mr-auto">
+        <li class="nav-item active"><%= link_to "Google 登入", user_google_oauth2_omniauth_authorize_path, class: "nav-link" %></li>
+        <li class="nav-item active">
+          <%= link_to "店家列表", drink_shops_path, class: 'nav-link' %>
+        </li>
+      </ul>
+
+    </nav>
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
+  </body>
+</html>
