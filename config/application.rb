@@ -14,7 +14,7 @@ module Drinker17
     config.generators.assets = false
     config.generators.helper = false
     config.filestack_rails.api_key = ENV['FILE_STACK_API_KEY']
-    config.filestack_rails.client_name = "17drinker"
+    config.filestack_rails.client_name = "drinker17"
 
   end
 end

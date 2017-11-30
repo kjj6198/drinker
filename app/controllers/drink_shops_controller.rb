@@ -70,6 +70,12 @@ class DrinkShopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def drink_shop_params
-      params.fetch(:drink_shop, {})
+      params.require(:drink_shop).permit(
+        :name,
+        :phone,
+        :address,
+        :comment,
+        :image_url,
+      )
     end
 end

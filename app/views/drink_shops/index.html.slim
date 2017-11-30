@@ -1,18 +1,14 @@
 h1 Listing drink_shops
 
-table
-  thead
-    tr
-      th
-      th
-      th
-
-  tbody
-    - @drink_shops.each do |drink_shop|
-      tr
-        td = link_to 'Show', drink_shop
-        td = link_to 'Edit', edit_drink_shop_path(drink_shop)
-        td = link_to 'Destroy', drink_shop, data: { confirm: 'Are you sure?' }, method: :delete
+.row
+  - @drink_shops.each do |drink_shop|
+    .col.col-md-4
+      .card
+        = link_to drink_shop_path(drink_shop) do
+          - if drink_shop.image_url.present?
+            = image_tag drink_shop.image_url, class: "card-img-top"
+          .card-body
+            h4.card-title = drink_shop.name
 
 br
 
