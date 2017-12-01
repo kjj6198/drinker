@@ -1,2 +1,24 @@
 h3.text-center 我的歷史紀錄
 .row.justify-content-md-center
+  .col.col-md-8
+    table.table.table-striped
+      thead
+        tr
+          th 店家名稱
+          th 飲料名稱
+          th 價格
+          th 備註
+          th 建立時間
+      tbody
+        - @histories.each do |history|
+          tr
+            td = history.menu.drink_shop.name
+            td = history.name
+            td = history.price
+            td = history.note
+            td = history.created_at
+      tfoot.text-right
+        tr
+          td = "已經花了 #{@histories_sum} 元買飲料"
+          td = "總共點了 #{@histories_count} 杯飲料"
+        
