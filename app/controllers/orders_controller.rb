@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :auth_google_user!
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
@@ -14,7 +15,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+    @order = Menu.find(params[:menu_id]).orders.build
   end
 
   # GET /orders/1/edit
@@ -24,14 +25,20 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    @menu = Menu.find(params[:menu_id])
+    @order = @menu.orders.new(order_params)
+    @order.user_id = current_user.id
+
+    if @menu.end_time < Time.now
+      return redirect_to menu_path(@menu), notice: "本次訂單已經截止，沒有訂到就哭哭哦！"
+    end
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to menu_path(@menu), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
-        format.html { render :new }
+        format.html { render menu_path(@menu) }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +76,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.fetch(:order, {})
+      params.require(:order).permit!
     end
 end

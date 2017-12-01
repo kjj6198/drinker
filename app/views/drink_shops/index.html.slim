@@ -1,15 +1,14 @@
-h1 Listing drink_shops
 
+
+.text-center
+  h2 飲料店家列表
+  = link_to '新增飲料店家', new_drink_shop_path, class: "btn-primary btn"
 .row
   - @drink_shops.each do |drink_shop|
-    .col.col-md-4
+    .col.col-md-3
       .card
         = link_to drink_shop_path(drink_shop) do
           - if drink_shop.image_url.present?
             = image_tag drink_shop.image_url, class: "card-img-top"
           .card-body
             h4.card-title = drink_shop.name
-
-br
-
-= link_to 'New Drink shop', new_drink_shop_path

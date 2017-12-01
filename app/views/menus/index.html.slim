@@ -1,19 +1,20 @@
-h1 Listing menus
-
-table
-  thead
-    tr
-      th
-      th
-      th
-
-  tbody
-    - @menus.each do |menu|
-      tr
-        td = link_to 'Show', menu
-        td = link_to 'Edit', edit_menu_path(menu)
-        td = link_to 'Destroy', menu, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Menu', new_menu_path
+.row.justify-content-md-center
+  .col.col-md-auto.text-center
+    h2.text-center 17 Drinker 目前訂單
+    = link_to "Drink 一下", new_menu_path, class: "btn btn-primary"
+.row.justify-content-md-center
+  .col.col-md-auto
+    table.table.table-striped
+      thead
+        tr
+          th 訂單名稱
+          th 商家名稱
+          th 倒數
+          th
+      tbody
+        - @menus.each do |menu|
+          tr
+            td = menu.name
+            td = menu.drink_shop.name
+            td = menu.is_active ? menu.remain_time : '已結束'
+            td = link_to "我要訂飲料", menu_path(menu), class: 'btn btn-primary'

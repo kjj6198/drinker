@@ -1,6 +1,30 @@
-h1 Editing menu
+h3.text-center 管理本次訂單（只有建立者才能控制）
+.row.justify-content-md-center
+  .col.col-md-8
+    ul
+      li = @menu.name
+      li = @menu.end_time
+  .col.col-md-8
+    table.table.table-striped
+      thead
+        tr
+          th 姓名
+          th 飲料名稱
+          th 價格
+          th 備註
+        tbody
+          - @menu.orders.each do |order|
+            tr
+              td = order.user.email
+              td = order.name
+              td = order.price
+              td = order.note
+        tfoot
+          tr
+            td = "本次飲料共 #{@menu.orders.size} 杯"
+            td = ""
+            
 
-== render 'form'
 
 = link_to 'Show', @menu
 '  |

@@ -16,7 +16,21 @@
 
  @import "bootstrap";
 
- .navbar {
-   color: #fff;
-   a { color: inherit; }
- }
+.navbar {
+  color: #fff;
+  a { color: inherit; }
+}
+
+.notice-bar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #27cc95;
+  color: #000;
+}
+
+img {
+  max-width: 100%;
+}

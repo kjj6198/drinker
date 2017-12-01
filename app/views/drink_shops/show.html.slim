@@ -1,6 +1,15 @@
-p#notice = notice
+- if notice.present?
+  .notice-message.alert.alert-success
+    p = notice
 
-
-= link_to 'Edit', edit_drink_shop_path(@drink_shop)
-'  |
-= link_to 'Back', drink_shops_path
+.row.justify-content-md-center
+  .col-md-8
+    .card
+      h3.card-header = @drink_shop.name
+      .card-body
+        = image_tag @drink_shop.image_url, class: "card-image"
+        h4.card-title = @drink_shop.address
+        p.card-text = @drink_shop.phone
+      .card-footer.text-right
+        = link_to '修改', edit_drink_shop_path(@drink_shop), class: "btn btn-primary"
+        = link_to '返回', drink_shops_path, class: "btn btn-link"

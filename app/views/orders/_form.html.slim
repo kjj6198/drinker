@@ -1,7 +1,10 @@
-= simple_form_for(@order) do |f|
+= simple_form_for @order, url: action_name == 'new' ? menu_orders_path : edit_menu_order_path(@order.menu) do |f|
   = f.error_notification
+  .row.justify-content-md-center
+    .col.col-md-8
+      .form-inputs
+        = f.input :name, label: "飲料名稱"
+        = f.input :note, label: "備註"
 
-  .form-inputs
-
-  .form-actions
-    = f.button :submit
+      .form-actions
+        = f.button :submit

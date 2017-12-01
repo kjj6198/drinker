@@ -14,14 +14,18 @@
 
   <body>
     <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-brand">17 Drinker</span>
+      <span class="navbar-brand"><%= link_to "17 Drinker", root_path %></span>
       <ul class="nav mr-auto">
-        <li class="nav-item active"><%= link_to "Google 登入", user_google_oauth2_omniauth_authorize_path, class: "nav-link" %></li>
+        <%- if current_user.present? %>
+          <li class="nav-item">HI <%= current_user.email %></li>
+        <% else %>
+          <li class="nav-item active"><%= link_to "Google 登入", user_google_oauth2_omniauth_authorize_path, class: "nav-link" %></li>
+        <% end %>
         <li class="nav-item active">
           <%= link_to "店家列表", drink_shops_path, class: 'nav-link' %>
         </li>
         <% if current_user.present? %>
-          <li><%= link_to "我的紀錄", users_profile_path, class: 'nav-link' %></li>
+          <li><%= link_to "我的訂單紀錄", users_profile_path, class: 'nav-link' %></li>
         <% end %>
       </ul>
 

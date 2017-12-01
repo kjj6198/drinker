@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130182520) do
+ActiveRecord::Schema.define(version: 20171201032957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,25 +69,29 @@ ActiveRecord::Schema.define(version: 20171130182520) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "menu_id"
+    t.integer  "drink_id"
+    t.integer  "price",      null: false
+    t.index ["drink_id"], name: "index_orders_on_drink_id", using: :btree
     t.index ["menu_id"], name: "index_orders_on_menu_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "picture"
     t.string   "username"
+    t.boolean  "is_admin",               default: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
@@ -95,5 +99,6 @@ ActiveRecord::Schema.define(version: 20171130182520) do
   add_foreign_key "drink_histories", "drinks"
   add_foreign_key "drink_histories", "users"
   add_foreign_key "drinks", "drink_shops"
+  add_foreign_key "orders", "drinks"
   add_foreign_key "orders", "users"
 end

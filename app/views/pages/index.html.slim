@@ -1,6 +1,7 @@
 .row.justify-content-md-center
-  .col.col-md-auto
+  .col.col-md-auto.text-center
     h2.text-center 17 Drinker 目前訂單
+    = link_to "Drink 一下", new_menu_path, class: "btn btn-primary"
 .row.justify-content-md-center
   .col.col-md-auto
     table.table.table-striped
@@ -16,6 +17,4 @@
             td = menu.name
             td = menu.drink_shop.name
             td = menu.is_active ? menu.remain_time : '已結束'
-            td 我要點餐
-
-
+            td = link_to "我要訂飲料", menu_path(menu), class: 'btn btn-primary'

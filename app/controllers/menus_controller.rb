@@ -27,6 +27,10 @@ class MenusController < ApplicationController
   def create
     @menu = current_user.menus.create(menu_params)
 
+    if @menu.end_time < Time.now
+      return render :new, flash[:notice] => "不得小於現在時間"
+    end
+
     respond_to do |format|
       if @menu.save!
         format.html { redirect_to @menu, notice: 'Menu was successfully created.' }

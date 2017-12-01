@@ -1,5 +1,38 @@
 p#notice = notice
 
+.row.justify-content-md-center
+  .col.col-md-8
+    .card
+      .card-body
+        h4.card-text = "由#{@menu.user.email}發起的 #{@menu.name}"
+        h4.card-text = @menu.drink_shop.name
+        p = "結束時間 #{@menu.remain_time}"
+        - if @menu.end_time < Time.now
+          span.badge.badge-danger 本訂單已經結束囉
+        = image_tag @menu.drink_shop.image_url, class: "card-image"
+      .card-footer
+        table.table.table-striped
+          thead
+            tr
+              th 姓名
+              th 飲料名稱
+              th 價格
+              th 備註
+          tbody
+            - @menu.orders.each do |order|
+              tr
+                td = order.user.email
+                td = order.name
+                td = order.price
+                td = order.note
+        h4.card-title = "我要訂飲料"
+        = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
+          = f.error_notification
+          = f.input :name, label: "品項名稱"
+          = f.input :price, label: "飲料價格"
+          = f.input :note, label: "備註"
+          = f.button :submit
+
 
 = link_to 'Edit', edit_menu_path(@menu)
 '  |

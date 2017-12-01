@@ -11,6 +11,7 @@ module Drinker17
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.time_zone = "Taipei"
     config.generators.assets = false
     config.generators.helper = false
     config.filestack_rails.api_key = ENV['FILE_STACK_API_KEY']
