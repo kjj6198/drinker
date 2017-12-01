@@ -36,7 +36,7 @@ class Menu < ApplicationRecord
       1. *店家名稱*: #{self.drink_shop.name}
       2. *開始時間*: #{self.created_at.strftime('%I:%M %p')}
       3. *結束時間*: #{self.end_time.strftime('%I:%M %p')}
-      4. *訂餐連結*: #{menu_url(self)}
+      4. *訂餐連結*: #{url_helpers.menu_url(self)}
       5. *剩餘時間*: #{self.remain_time}
       6. *訂單圖片*：#{self.drink_shop.image_url}
     "

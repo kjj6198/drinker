@@ -16,6 +16,6 @@ module Drinker17
     config.generators.helper = false
     config.filestack_rails.api_key = ENV['FILE_STACK_API_KEY']
     config.filestack_rails.client_name = "drinker17"
-
+    routes.default_url_options = { host: ENV['HOST'] }
   end
 end
