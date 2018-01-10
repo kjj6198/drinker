@@ -16,9 +16,9 @@ h3.text-center 我的歷史紀錄
             td = history.name
             td = history.price
             td = history.note
-            td = history.created_at
+            td = history.created_at.strftime('%Y-%m-%d %I:%M %p')
       tfoot.text-right
         tr
           td = "已經花了 #{@histories_sum} 元買飲料"
           td = "總共點了 #{@histories_count} 杯飲料"
-        
+          td = "花費排名第 #{@histories_rank} 名"

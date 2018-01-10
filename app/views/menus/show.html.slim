@@ -4,7 +4,7 @@ p#notice = notice
   .col.col-md-8
     .card
       .card-body
-        h4.card-text.text-center = "由 #{@menu.user.email} 發起的 【#{@menu.name}】"
+        h4.card-text.text-center = "由 #{@menu.user.name} 發起的 【#{@menu.name}】"
         h4.card-text = @menu.drink_shop.name
         - if @menu.remain_time != '已截止'
           p = "結束時間 #{@menu.remain_time}"
@@ -23,7 +23,7 @@ p#notice = notice
           tbody
             - @menu.orders.each do |order|
               tr
-                td = order.user.email
+                td = order.user.name
                 td = order.name
                 td = order.price
                 td = order.note

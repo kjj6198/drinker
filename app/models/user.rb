@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :orders
   has_many :menus
 
+  def name
+    self.username || self.email
+  end
 
   def self.from_omniauth(account)
     data = account.info

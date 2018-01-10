@@ -17,7 +17,7 @@
       <span class="navbar-brand"><%= link_to "17 Drinker", root_path %></span>
       <ul class="nav mr-auto">
         <%- if current_user.present? %>
-          <li class="nav-item nav-link">HI <%= current_user.email %></li>
+          <li class="nav-item nav-link">HI <%= current_user.name %></li>
         <% else %>
           <li class="nav-item active"><%= link_to "Google 登入", user_google_oauth2_omniauth_authorize_path, class: "nav-link" %></li>
         <% end %>
