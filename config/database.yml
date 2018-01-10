@@ -11,8 +11,8 @@ default: &default
 
 development:
   <<: *default
-  host: localhost
-  port: 32768
+  host: 192.168.99.100
+  port: 3306
   database: 'drinker-dev'
 
 

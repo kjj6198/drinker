@@ -4,12 +4,14 @@ p#notice = notice
   .col.col-md-8
     .card
       .card-body
-        h4.card-text = "由#{@menu.user.email}發起的 #{@menu.name}"
+        h4.card-text.text-center = "由 #{@menu.user.email} 發起的 【#{@menu.name}】"
         h4.card-text = @menu.drink_shop.name
-        p = "結束時間 #{@menu.remain_time}"
+        - if @menu.remain_time != '已截止'
+          p = "結束時間 #{@menu.remain_time}"
         - if @menu.end_time < Time.now
-          span.badge.badge-danger 本訂單已經結束囉
-        = image_tag @menu.drink_shop.image_url, class: "card-image"
+          p.badge.badge-danger 本訂單已經結束囉
+        .image-container
+          = image_tag @menu.drink_shop.image_url, class: "card-image"
       .card-footer
         table.table.table-striped
           thead

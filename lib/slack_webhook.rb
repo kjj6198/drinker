@@ -6,7 +6,7 @@ module SlackWebhook
     webhook_url = ENV['SLACK_WEBHOOK_URL']
     data = {
       text: message,
-      username: "jack_drinker"
+      username: "yuile"
     }.to_json
     http = Curl.post(webhook_url, data)
     puts http.body_str
