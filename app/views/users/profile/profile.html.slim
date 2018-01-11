@@ -21,4 +21,5 @@ h3.text-center 我的歷史紀錄
         tr
           td = "已經花了 #{@histories_sum} 元買飲料"
           td = "總共點了 #{@histories_count} 杯飲料"
-          td = "花費排名第 #{@histories_rank} 名"
+          - if @histories_rank.present?
+            td = "花費排名第 #{@histories_rank} 名"

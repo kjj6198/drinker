@@ -11,7 +11,12 @@ class Users::ProfileController < ApplicationController
         FROM orders GROUP BY user_id;
     ")
 
-    @histories_rank = result.select{ |record| record["user_id"] == current_user.id }.first.symbolize_keys[:myrank]
+    @histories_rank = result.select{ |record| record["user_id"] == current_user.id }.first
+
+    if @histories_rank.present?
+      @histories_rank = @histories_rank.symbolize_keys[:myrank]
+    end
+
     @histories_count = current_user.orders.count(:id)
   end
 end
