@@ -47,6 +47,14 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
+    if @order.menu.end_time < Time.now
+      return render json: { message: "已經截止，無法進行修改" }
+    end
+
+    if @order.user_id !== current_user.id
+      return render json: { message: "不可以修改別人的訂單！" }
+    end
+
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }

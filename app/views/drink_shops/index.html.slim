@@ -3,12 +3,13 @@
 .text-center
   h2 飲料店家列表
   = link_to '新增飲料店家', new_drink_shop_path, class: "btn-primary btn"
-.row
+.row.space
   - @drink_shops.each do |drink_shop|
-    .col.col-md-3
+    .col.col-md-3.m-r-small
       .card
-        = link_to drink_shop_path(drink_shop) do
-          - if drink_shop.image_url.present?
-            = image_tag drink_shop.image_url, class: "card-img-top"
-          .card-body
+        .card-img[style="padding-bottom: 350px; background-image: url(#{image_url drink_shop.image_url})"]
+        .card-body
+          = link_to drink_shop_path(drink_shop) do
             h4.card-title = drink_shop.name
+        .card-footer
+          span ❤️

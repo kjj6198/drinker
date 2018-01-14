@@ -20,22 +20,30 @@ p#notice = notice
               th 飲料名稱
               th 價格
               th 備註
+              - if @menu.is_active?
+                th
           tbody
             - @menu.orders.each do |order|
-              tr
+              tr[data-editable="#{order.user_id == current_user.id}"]
                 td = order.user.name
                 td = order.name
                 td = order.price
                 td = order.note
-        h4.card-title = "我要訂飲料"
-        = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
-          = f.error_notification
-          = f.input :name, label: "品項名稱"
-          = f.input :price, label: "飲料價格"
-          = f.input :note, label: "備註"
-          = f.button :submit
+                - if order.user_id == current_user.id && @menu.is_active
+                  td = "修改"
+        - if @menu.is_active?
+          h4.card-title = "我要訂飲料"
+          = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
+            = f.error_notification
+            = f.input :name, label: "品項名稱"
+            = f.input :price, label: "飲料價格"
+            = f.input :note, label: "備註"
+            = f.button :submit
+        - else
+          h4.card-title.text-center = "已截止"
 
-
+= content_for :javascripts do
+  = javascript_include_tag "edit"
 = link_to 'Edit', edit_menu_path(@menu)
 '  |
 = link_to 'Back', menus_path

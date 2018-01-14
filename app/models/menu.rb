@@ -1,4 +1,3 @@
-require "slack_webhook"
 class Menu < ApplicationRecord
   include SlackWebhook
 
@@ -29,12 +28,8 @@ class Menu < ApplicationRecord
   private
 
   def start_countdown
-    message = "#{self.name} 已經結束囉，沒訂到哭哭哦:jack-see-you:\n
-訂單編號：#{self.id}\n
-查詢訂單：`@yuile order :order_id`
-"
     if self.end_time > Time.now
-      CountdownWorker.perform_at(self.end_time, self.id, message)
+      CountdownWorker.perform_at(self.end_time, self.id)
     end
   end
   def send_notification

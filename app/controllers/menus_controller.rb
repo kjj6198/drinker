@@ -1,5 +1,5 @@
 class MenusController < ApplicationController
-  before_action :auth_google_user!, except: [:index, :show]
+  before_action :auth_google_user!, except: [:index]
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
 
   # GET /menus

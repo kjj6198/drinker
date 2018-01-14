@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201032957) do
+ActiveRecord::Schema.define(version: 20180112171757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,9 +52,9 @@ ActiveRecord::Schema.define(version: 20171201032957) do
   create_table "menus", force: :cascade do |t|
     t.string   "name"
     t.datetime "end_time"
-    t.boolean  "is_active"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.boolean  "is_active",     default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "drink_shop_id"
     t.integer  "user_id"
     t.index ["drink_shop_id"], name: "index_menus_on_drink_shop_id", using: :btree

@@ -6,6 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.6/Rx.min.js"></script>
     <%= filestack_js_include_tag %>
     <script>
       var drinker17 = filestack.init('AgaDjqcSfQ0uI2Esfg3ynz');
@@ -35,4 +36,5 @@
       <%= yield %>
     </div>
   </body>
+  <%= yield :javascripts %>
 </html>

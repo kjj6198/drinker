@@ -6,6 +6,7 @@
         = f.input :name
         = f.input :phone, input_html: { type: 'text' }
         = f.input :address
+        = f.input :comment, label: "推薦原因（選填）", input_html: { placeholder: "Why do you like this drink shop?" }
         = f.filestack_field :image_url, '上傳 Menu'
 
       .form-actions
