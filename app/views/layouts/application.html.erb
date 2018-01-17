@@ -6,7 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.6/Rx.min.js"></script>
+
     <%= filestack_js_include_tag %>
     <script>
       var drinker17 = filestack.init('AgaDjqcSfQ0uI2Esfg3ynz');
@@ -25,6 +25,9 @@
         <li class="nav-item active">
           <%= link_to "店家列表", drink_shops_path, class: 'nav-link' %>
         </li>
+        <li class="nav-item active">
+          <%= link_to "總排名列表", rank_path, class: 'nav-link' %>
+        </li>
         <% if current_user.present? %>
           <li class="nav-item"><%= link_to "我的訂單紀錄", users_profile_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to '登出', destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
@@ -32,7 +35,7 @@
       </ul>
 
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid max-width-1080">
       <%= yield %>
     </div>
   </body>

@@ -1,0 +1,14 @@
+table.table.table-striped
+  thead
+    tr
+      th 使用者名稱
+      th 花費金額
+      th 排名
+  tbody
+    - @rank.each do |user_rank|
+      tr
+        td = user_rank[:username]
+        td = user_rank[:sum]
+        td = user_rank[:myrank]
+
+

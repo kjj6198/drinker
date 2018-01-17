@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to menu_path(@menu), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
-        format.html { render menu_path(@menu) }
+        format.html { redirect_to menu_path(@menu), notice: @order.errors.full_messages.join(' ') }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
@@ -51,14 +51,14 @@ class OrdersController < ApplicationController
       return render json: { message: "已經截止，無法進行修改" }
     end
 
-    if @order.user_id !== current_user.id
+    if @order.user_id != current_user.id
       return render json: { message: "不可以修改別人的訂單！" }
     end
 
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
+        format.html { redirect_to menu_order_path(@order.menu, @order), notice: 'Order was successfully updated.' }
+        format.json { render @order, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @order.errors, status: :unprocessable_entity }

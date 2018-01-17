@@ -1,4 +1,5 @@
-p#notice = notice
+- if notice.present?
+  p#notice.alert.alert-success = notice
 
 .row.justify-content-md-center
   .col.col-md-8
@@ -20,19 +21,26 @@ p#notice = notice
               th 飲料名稱
               th 價格
               th 備註
+              th 已付清
               - if @menu.is_active?
                 th
           tbody
             - @menu.orders.each do |order|
-              tr[data-editable="#{order.user_id == current_user.id}"]
+              tr[id="order-#{order.id}" data-editable="#{order.user_id == current_user.id}"]
                 td = order.user.name
                 td = order.name
                 td = order.price
                 td = order.note
+                - if @menu.user_id == current_user.id
+                  td = check_box_tag "has_paid-#{order.id}", menu_order_path(@menu, order)
+                - else
+                  td = order.has_paid? ? "是" : "否"
+
                 - if order.user_id == current_user.id && @menu.is_active
-                  td = "修改"
+                  td = link_to "修改", edit_menu_order_path(@menu, order)
         - if @menu.is_active?
           h4.card-title = "我要訂飲料"
+          =
           = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
             = f.error_notification
             = f.input :name, label: "品項名稱"
@@ -47,3 +55,25 @@ p#notice = notice
 = link_to 'Edit', edit_menu_path(@menu)
 '  |
 = link_to 'Back', menus_path
+
+
+javascript:
+  $('[id*="has_paid-"]').on('change', function(e) {
+    var $target = $(e.target);
+    var isChecked = $target.prop('checked');
+    var url = $target.val();
+    $target.prop('disabled', true);
+    $.ajax({
+      type: 'PUT',
+      url: url,
+      dataType: 'json',
+      data: {
+        order: {
+          has_paid: isChecked,
+        }
+
+      }
+    }).success(function(data) {
+      $target.prop('disabled', false);
+    });
+  });

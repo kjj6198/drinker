@@ -1,11 +1,18 @@
 class MenusController < ApplicationController
-  before_action :auth_google_user!, except: [:index]
+  before_action :auth_google_user!, except: [:index, :unpaid]
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
 
   # GET /menus
   # GET /menus.json
   def index
     @menus = Menu.all
+  end
+
+  def unpaid
+    @menu = Menu.find(params[:menu_id])
+    @unpaid_orders = @menu.orders.where.not(has_paid: :true)
+
+    render json: @unpaid_orders
   end
 
   # GET /menus/1

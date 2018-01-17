@@ -11,22 +11,43 @@ h3.text-center 管理本次訂單（只有建立者才能控制）
           th 姓名
           th 飲料名稱
           th 價格
+          th 已繳清
           th 備註
         tbody
           - @menu.orders.each do |order|
-            tr
+            tr[class="order-detail"]
               td = order.user.email
               td = order.name
               td = order.price
+              td = check_box_tag "has_paid-#{order.id}", menu_order_path(@menu, order), order.has_paid?
               td = order.note
         tfoot
           tr
             td = "本次飲料共 #{@menu.orders.size} 杯"
-            td = ""
-            
+
 
 
 = link_to 'Show', @menu
 '  |
 = link_to 'Back', menus_path
 
+javascript:
+  $('[id*="has_paid-"]').on('change', function(e) {
+    var $target = $(e.target);
+    var isChecked = $target.prop('checked');
+    var url = $target.val();
+    $target.prop('disabled', true);
+    $.ajax({
+      type: 'PUT',
+      url: url,
+      dataType: 'json',
+      data: {
+        order: {
+          has_paid: isChecked,
+        }
+
+      }
+    }).success(function(data) {
+      $target.prop('disabled', false);
+    });
+  });
