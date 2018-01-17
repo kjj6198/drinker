@@ -19,7 +19,10 @@ h3.text-center 管理本次訂單（只有建立者才能控制）
               td = order.user.email
               td = order.name
               td = order.price
-              td = check_box_tag "has_paid-#{order.id}", menu_order_path(@menu, order), order.has_paid?
+              - if @menu.user_id == current_user.id
+                td = check_box_tag "has_paid-#{order.id}", menu_order_path(@menu, order), order.has_paid?
+              - else
+                td = order.has_paid? ? "是" : "否"
               td = order.note
         tfoot
           tr

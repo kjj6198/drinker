@@ -52,6 +52,11 @@ class MenusController < ApplicationController
   # PATCH/PUT /menus/1
   # PATCH/PUT /menus/1.json
   def update
+
+    if @menu.user_id != current_user.id
+      return render json: {}, status: 401
+    end
+
     respond_to do |format|
       if @menu.update(menu_params)
         format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
