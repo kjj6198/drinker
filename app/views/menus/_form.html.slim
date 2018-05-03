@@ -6,6 +6,8 @@
       .form-inputs
         = f.input :name
         = f.input :end_time
+        - if action_name != 'edit'
+          = f.input :channel, input_html: { placeholder: "which channel do you want to notify? e.g: #dev-frontend" }
         = f.input :drink_shop_id, collection: DrinkShop.all
 
 

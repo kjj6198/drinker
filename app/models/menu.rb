@@ -18,7 +18,7 @@ class Menu < ApplicationRecord
       return "已截止"
     end
 
-    "#{mins}分 #{secs}秒"
+    "#{mins}:#{secs}"
   end
 
   def total
@@ -41,6 +41,6 @@ class Menu < ApplicationRecord
 5. *剩餘時間*: #{self.remain_time}
 6. *訂單圖片*：#{self.drink_shop.image_url}
     "
-    send_to_slack message
+    send_to_slack message, self.channel
   end
 end

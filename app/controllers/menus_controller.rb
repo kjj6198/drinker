@@ -89,6 +89,7 @@ class MenusController < ApplicationController
       params.require(:menu).permit(
         :name,
         :end_time,
+        :channel,
         :drink_shop_id
       )
     end

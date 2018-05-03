@@ -14,6 +14,6 @@ class CountdownWorker
 查詢訂單：`@yuile order :order_id`
 訂單金額：#{menu.total}
 "
-    send_to_slack message
+    send_to_slack message, menu.channel
   end
 end

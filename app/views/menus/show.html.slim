@@ -8,7 +8,9 @@
         h4.card-text.text-center = "由 #{@menu.user.name} 發起的 【#{@menu.name}】"
         h4.card-text = @menu.drink_shop.name
         - if @menu.remain_time != '已截止'
-          p = "結束時間 #{@menu.remain_time}"
+          p
+            = "結束時間："
+            span.remain-time = "#{@menu.remain_time}"
         - if @menu.end_time < Time.now
           p.badge.badge-danger 本訂單已經結束囉
         .image-container
@@ -77,3 +79,50 @@ javascript:
       $target.prop('disabled', false);
     });
   });
+
+  var $activeCountdown = $('.remain-time').toArray()
+    .map(elm => $(elm))
+    .filter(function(elm) {
+      return elm.text().trim() !== '已結束' && elm.text().trim() !== '已截止';
+    });
+
+  function mapToTimer(elm) {
+    var matches = elm.text()
+      .replace(/\s/g, '')
+      .match(/(\d+):(\d+)/);
+    
+    return {
+      elm: elm,
+      minutes: parseInt(matches[1], 10),
+      seconds: parseInt(matches[2], 10),
+    }
+  }
+
+  function countdown(timer) {
+    if (timer.seconds === 0) {
+      timer.minutes -= 1;
+      timer.seconds = 59;
+    } else {
+      timer.seconds -= 1;
+    }
+
+    return timer;
+  }
+
+  function display(timer) {
+    if (timer.minutes === 0 && timer.seconds === 0) {
+      timer.elm.text('已截止');
+    } else {
+      timer.elm.text(timer.minutes + ':' + timer.seconds)
+    }
+  }
+
+  setInterval(function() {
+    $activeCountdown
+      .map(mapToTimer)
+      .map(countdown)
+      .filter(timer => {
+        display(timer);
+        return !(timer.minutes === 0 && timer.seconds === 0);
+      })
+  }, 1000);

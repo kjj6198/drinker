@@ -14,12 +14,19 @@ class User < ApplicationRecord
   def self.from_omniauth(account)
     data = account.info
     user = User.where(:email => data.email).first
-
     unless user
-      user = User.create(username: data.name,
-            email: data.email,
-            password: Devise.friendly_token[0,20])
+      user = User.create(
+        username: data.name,
+        email: data.email,
+        picture: data.image,
+        password: Devise.friendly_token[0,20]
+      )
       return user
+    end
+
+    if data.image
+      user.picture = data.image
+      user.save
     end
 
     user
