@@ -20,6 +20,7 @@
             td = link_to "我要訂飲料", menu_path(menu), class: 'btn btn-primary'
 
 javascript:
+  let timer = null;
   var $activeCountdown = $('.remain-time').toArray()
     .map(elm => $(elm))
     .filter(function(elm) {
@@ -57,7 +58,7 @@ javascript:
     }
   }
 
-  setInterval(function() {
+  timer = setInterval(function() {
     $activeCountdown
       .map(mapToTimer)
       .map(countdown)
@@ -66,3 +67,7 @@ javascript:
         return !(timer.minutes === 0 && timer.seconds === 0);
       })
   }, 1000);
+
+  $(document).on('page:before-unload', function(e) {
+    clearInterval(timer);
+  })
