@@ -95,8 +95,13 @@ class MenusController < ApplicationController
     end
 
     def auth_google_user!
-      unless current_user
+      
+      if request.format == "application/json"
+      
+      else
+        unless current_user
           redirect_to user_google_oauth2_omniauth_authorize_path
+        end
       end
     end
 end
