@@ -1,1 +1,2 @@
-json.extract! drink_shop, :id, :name
+json.label drink_shop.name
+json.value drink_shop.id
