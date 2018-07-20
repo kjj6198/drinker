@@ -34,9 +34,8 @@ class MenusController < ApplicationController
   # POST /menus.json
   def create
     if request.headers["Content-Type"] == "application/json"
-      puts bearer_token
       if bearer_token != ENV["DRINK_ACCESS_TOKEN"]
-        return render json: { error: "no permission", status: :unauthorized }
+        return render json: { error: "no permission" }, status: :unauthorized
       end
 
       @user = User.find_by_email(params[:email])
