@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get :unpaid
   end
 
+  post "/api/menus" => "menus#create"
+
   get "/rank" => "pages#rank"
   get "/users/profile" => "users/profile#profile"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/oauth_callbacks" }

@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
   before_action :auth_google_user!, except: [:index, :unpaid]
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   # GET /menus
   # GET /menus.json
@@ -32,6 +33,28 @@ class MenusController < ApplicationController
   # POST /menus
   # POST /menus.json
   def create
+    if request.headers["Content-Type"] == "application/json"
+      puts bearer_token
+      if bearer_token != ENV["DRINK_ACCESS_TOKEN"]
+        return render json: { error: "no permission", status: :unauthorized }
+      end
+
+      @user = User.find_by_email(params[:email])
+      
+      unless @user.present?
+        return render json: { error: "can not found user" }, status: :not_found
+      end
+
+      @menu = @user.menus.new(menu_json_params)
+      @menu.end_time = Time.now + params[:duration] * 60
+
+      if @menu.save!
+        return render json: @menu
+      else
+        return render json: @menu.errors, status: :unprocessable_entity
+      end
+    end
+
     @menu = current_user.menus.create(menu_params)
 
     if @menu.end_time < Time.now
@@ -79,9 +102,23 @@ class MenusController < ApplicationController
   end
 
   private
+    def bearer_token
+      pattern = /^Bearer /
+      header  = request.headers["Authorization"] # <= env
+      return header.gsub(pattern, '') if header && header.match(pattern)
+    end
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_menu
       @menu = Menu.find(params[:id])
+    end
+
+    def menu_json_params
+      params.permit(
+        :name,
+        :channel,
+        :drink_shop_id
+      )
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -95,8 +132,7 @@ class MenusController < ApplicationController
     end
 
     def auth_google_user!
-      
-      if request.format == "application/json"
+      if request.format == "application/json" || request.headers["Content-Type"] == "application/json"
       
       else
         unless current_user
