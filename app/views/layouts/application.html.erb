@@ -18,6 +18,9 @@
     <nav class="navbar navbar-dark bg-dark">
       <span class="navbar-brand"><%= link_to "17 Drinker", root_path %></span>
       <ul class="nav mr-auto">
+        <li class="nav-item nav-link">
+          <%= link_to "JOB", job_path %>
+        </li>
         <%- if current_user.present? %>
           <li class="nav-item nav-link">
             <%- if current_user.picture %>

@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  def job
+  end
   def index
     @menus = Menu.all.includes(:drink_shop).order(created_at: :desc).limit(20)
   end

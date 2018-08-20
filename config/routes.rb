@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post "/api/menus" => "menus#create"
 
+  get "/job" => "pages#job"
   get "/rank" => "pages#rank"
   get "/users/profile" => "users/profile#profile"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/oauth_callbacks" }
