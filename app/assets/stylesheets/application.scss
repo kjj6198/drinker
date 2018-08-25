@@ -14,11 +14,13 @@
  *= require_self
  */
 
- @import "bootstrap";
+@import "bootstrap";
 
 .navbar {
   color: #fff;
-  a { color: inherit; }
+  a {
+    color: inherit;
+  }
 }
 
 .max-width-1200 {
@@ -44,18 +46,29 @@ img {
   background-position: center center;
 }
 
-
 .m-r-small {
   margin-bottom: 1em;
 }
-
 
 .space {
   margin: 1em 0;
 }
 
-
 .table {
   max-width: 1200px !important;
   table-layout: fixed;
+}
+
+.option-tag {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  font-size: 16px;
+  cursor: pointer;
+
+  &.price:before {
+    content: "$";
+  }
 }

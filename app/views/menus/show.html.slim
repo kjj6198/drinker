@@ -41,13 +41,37 @@
                 - if order.user_id == current_user.id && @menu.is_active
                   td = link_to "修改", edit_menu_order_path(@menu, order)
         - if @menu.is_active?
-          h4.card-title = "我要訂飲料"
-          =
           = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
             = f.error_notification
             = f.input :name, label: "品項名稱"
+            div
+              span.option-tag.size[data-value="S"] S
+              span.option-tag.size[data-value="M"] M
+              span.option-tag.size[data-value="L"] L
+              - current_user.find_orders_by_drink_shop(@menu.drink_shop_id).each do |order|
+                span.option-tag.name[data-value="#{order}"] = order
             = f.input :price, label: "飲料價格"
+            div
+              span.option-tag.price[data-value="35"] 35
+              span.option-tag.price[data-value="40"] 40
+              span.option-tag.price[data-value="45"] 45
+              span.option-tag.price[data-value="50"] 50
+              span.option-tag.price[data-value="55"] 55
+              span.option-tag.price[data-value="60"] 60
+              span.option-tag.price[data-value="65"] 65
+              span.option-tag.price[data-value="70"] 70
+              span.option-tag.price[data-value="75"] 75
+              span.option-tag.price[data-value="80"] 80
+
             = f.input :note, label: "備註", as: "text"
+            div
+              span.option-tag.note[data-value="無糖"] 無糖
+              span.option-tag.note[data-value="微糖"] 微糖
+              span.option-tag.note[data-value="少糖"] 少糖
+              span.option-tag.note[data-value="去冰"] 去冰
+              span.option-tag.note[data-value="少冰"] 少冰
+              span.option-tag.note[data-value="正常冰"] 正常冰
+              span.option-tag.note[data-value="謝謝 #{@menu.user.name} ❤️"] = "謝謝 #{@menu.user.name} ❤️"
             = f.button :submit
         - else
           h4.card-title.text-center = "已截止"
@@ -60,6 +84,27 @@
 
 
 javascript:
+  $('.option-tag.price').on('click', function(e) {
+    $('#order_price').val($(e.target).data('value'));
+  });
+
+  $('.option-tag.name').on('click', function(e) {
+    const $orderName = $('#order_name');
+    $orderName.val($(e.target).data('value'));
+  });
+
+  $('.option-tag.size').on('click', function(e) {
+    const $orderName = $('#order_name');
+    const val = $orderName.val();
+    $orderName.val(val + ' ' + $(e.target).data('value'));
+  });
+
+  $('.option-tag.note').on('click', function(e) {
+    const $orderNote = $('#order_note');
+    const val = $orderNote.val()
+    $orderNote.val(val + $(e.target).data('value'));
+  });
+
   $('[id*="has_paid-"]').on('change', function(e) {
     var $target = $(e.target);
     var isChecked = $target.prop('checked');

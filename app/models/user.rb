@@ -11,6 +11,10 @@ class User < ApplicationRecord
     self.username || self.email
   end
 
+  def find_orders_by_drink_shop(drink_shop_id)
+    self.orders.select { |o| o.menu.drink_shop_id == drink_shop_id }.take(10).map{|o| o.name }.uniq()
+  end
+
   def self.from_omniauth(account)
     data = account.info
     user = User.where(:email => data.email).first
