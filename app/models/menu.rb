@@ -10,6 +10,14 @@ class Menu < ApplicationRecord
   after_create :send_notification
   after_create :start_countdown
 
+  def is_full?
+    if self.max_count.present?
+      return self.orders.count >= self.max_count
+    end
+
+    return false
+  end
+
   def remain_time
     mins = (self.end_time - DateTime.now).to_i / 60
     secs = (self.end_time - DateTime.now).to_i % 60
@@ -32,15 +40,25 @@ class Menu < ApplicationRecord
       CountdownWorker.perform_at(self.end_time, self.id)
     end
   end
+  
   def send_notification
-    message = "#{self.user.username} 已經發起了訂飲料活動\n
-1. *店家名稱*: #{self.drink_shop.name}
-2. *開始時間*: #{self.created_at.strftime('%I:%M %p')}
-3. *結束時間*: #{self.end_time.strftime('%I:%M %p')}
-4. *訂餐連結*: #{url_helpers.menu_url(self)}
-5. *剩餘時間*: #{self.remain_time}
-6. *訂單圖片*：#{self.drink_shop.image_url}
-    "
+    message = {
+      text: "由 #{self.user.username} 所發起的 #{self.name}",
+      attachments: [
+        {
+          title: self.name,
+          title_link: url_helpers.menu_url(self),
+          color: "#27cc95",
+          image_url: self.drink_shop.image_url,
+          fields: [
+            { title: "開始時間", value: self.created_at.strftime('%I:%M %p'), short: true },
+            { title: "結束時間", value: self.end_time.strftime('%I:%M %p'), short: true },
+            { title: "剩餘時間", value: self.remain_time, short: true },
+            { title: "限量杯數", value: self.max_count.present? ? self.max_count : "無限制", short: true }
+          ]
+        }
+      ],
+    }
     send_to_slack message, self.channel
   end
 end

@@ -120,9 +120,9 @@ class MenusController < ApplicationController
       )
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def menu_params
       params.require(:menu).permit(
+        :max_count,
         :name,
         :end_time,
         :channel,

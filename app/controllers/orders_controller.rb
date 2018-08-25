@@ -35,6 +35,9 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        if @menu.is_full?
+          @menu.update({ is_active: false })
+        end
         format.html { redirect_to menu_path(@menu), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else

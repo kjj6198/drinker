@@ -47,7 +47,7 @@
             = f.error_notification
             = f.input :name, label: "品項名稱"
             = f.input :price, label: "飲料價格"
-            = f.input :note, label: "備註"
+            = f.input :note, label: "備註", as: "text"
             = f.button :submit
         - else
           h4.card-title.text-center = "已截止"

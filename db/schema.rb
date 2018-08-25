@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503162245) do
+ActiveRecord::Schema.define(version: 20180825165444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20180503162245) do
     t.integer  "drink_shop_id"
     t.integer  "user_id"
     t.string   "channel"
+    t.integer  "max_count"
     t.index ["drink_shop_id"], name: "index_menus_on_drink_shop_id", using: :btree
     t.index ["user_id"], name: "index_menus_on_user_id", using: :btree
   end
