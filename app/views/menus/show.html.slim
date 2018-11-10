@@ -39,7 +39,9 @@
                   td = order.has_paid? ? "是" : "否"
 
                 - if order.user_id == current_user.id && @menu.is_active
-                  td = link_to "修改", edit_menu_order_path(@menu, order)
+                  td
+                    = link_to "修改 | ", edit_menu_order_path(@menu, order)
+                    = link_to "刪除", menu_order_path(@menu, order), method: "DELETE"
         - if @menu.is_active?
           = simple_form_for @menu.orders.build, url: menu_orders_path(@menu) do |f|
             = f.error_notification

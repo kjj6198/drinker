@@ -78,9 +78,13 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
+    if @order.user.id != current_user.id
+      return render_404
+    end
+
     @order.destroy
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to menu_path(@order.menu), notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

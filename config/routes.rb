@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :drink_shops
+  delete "/orders/:id" => "orders#destroy"
   resources :menus do
     resources :orders
     get :unpaid
